@@ -45,6 +45,7 @@ import org.getspout.spoutapi.packet.PacketBlockData;
 import org.getspout.spoutapi.packet.PacketCustomBlockDesign;
 import org.getspout.spoutapi.packet.PacketCustomBlockOverride;
 import org.getspout.spoutapi.packet.PacketCustomItem;
+import org.getspout.spoutapi.packet.PacketCustomMaterial;
 import org.getspout.spoutapi.packet.PacketCustomMultiBlockOverride;
 import org.getspout.spoutapi.packet.PacketItemName;
 import org.getspout.spoutapi.packet.PacketItemTexture;
@@ -144,6 +145,15 @@ public class SimpleMaterialManager implements MaterialManager {
 				it.advance();
 				String pluginName = (String) customTexturesPlugin.get(TIntPairHashSet.longToKey1(it.key()), (short) TIntPairHashSet.longToKey2(it.key()));
 				((SpoutPlayer) player).sendPacket(new PacketItemTexture(TIntPairHashSet.longToKey1(it.key()), (short) TIntPairHashSet.longToKey2(it.key()), pluginName, it.value()));
+			}
+			for (Integer id : UniqueItemStringMap.getIds()) {
+				Material material = MaterialData.getMaterial(381, id.shortValue());
+				if(material instanceof CustomBlock) {
+					((SpoutPlayer) player).sendPacket(new PacketCustomMaterial((CustomBlock) material));
+				}
+				else if(material instanceof CustomItem) {
+					((SpoutPlayer) player).sendPacket(new PacketCustomMaterial((CustomItem) material));
+				}
 			}
 		}
 	}
