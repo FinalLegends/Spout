@@ -210,23 +210,12 @@ public class SimpleMaterialManager extends AbstractBlockManager implements Mater
 		String pluginName = (String) itemPlugin.get(id);
 
 		PacketCustomItem p = new PacketCustomItem(id, blockId, metaData);
-		PacketCustomMaterial p2 = null;
-		Material material = MaterialData.getMaterial(318, (short) id);
-		if(material instanceof CustomBlock) {
-			p2 = new PacketCustomMaterial((CustomBlock) material);
-		}
-		else if (material instanceof CustomItem) {
-			p2 = new PacketCustomMaterial((CustomItem) material);
-		}
 
 		for (Player player : players) {
 			if (player instanceof SpoutCraftPlayer) {
 				SpoutCraftPlayer sp = (SpoutCraftPlayer) player;
 				if (sp.isSpoutCraftEnabled()) {
 					sp.sendPacket(p);
-					if(p2 != null) {
-						sp.sendPacket(p2);
-					}
 				}
 			}
 		}
